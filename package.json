@@ -1,0 +1,39 @@
+{
+  "name": "nodemailer-postmark-transport",
+  "version": "1.0.0",
+  "description": "Postmark transport for Nodemailer",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt && mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:killmenot/nodemailer-postmark-transport.git"
+  },
+  "keywords": [
+    "nodemailer",
+    "postmark"
+  ],
+  "author": {
+    "name": "Alexey Kucherenko",
+    "url": "https://github.com/killmenot"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/killmenot/nodemailer-postmark-transport/issues"
+  },
+  "homepage": "https://github.com/RebelMail/nodemailer-postmark-transport",
+  "dependencies": {
+    "addressparser": "^1.0.1",
+    "extend": "^3.0.0",
+    "postmark": "^1.2.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "grunt": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "load-grunt-tasks": "^3.5.0",
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.3"
+  }
+}
