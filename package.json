@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/killmenot/nodemailer-postmark-transport/issues"
   },
-  "homepage": "https://github.com/RebelMail/nodemailer-postmark-transport",
+  "homepage": "https://github.com/killmenot/nodemailer-postmark-transport",
   "dependencies": {
     "addressparser": "^1.0.1",
     "extend": "^3.0.0",
