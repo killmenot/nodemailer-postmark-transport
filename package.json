@@ -12,7 +12,8 @@
   },
   "keywords": [
     "nodemailer",
-    "postmark"
+    "postmark",
+    "transport"
   ],
   "author": {
     "name": "Alexey Kucherenko",
