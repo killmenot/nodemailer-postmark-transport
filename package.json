@@ -1,6 +1,6 @@
 {
   "name": "nodemailer-postmark-transport",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Postmark transport for Nodemailer",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,8 @@
   "keywords": [
     "nodemailer",
     "postmark",
-    "transport"
+    "transport",
+    "attachments"
   ],
   "author": {
     "name": "Alexey Kucherenko",
@@ -26,13 +27,17 @@
   "homepage": "https://github.com/killmenot/nodemailer-postmark-transport",
   "dependencies": {
     "addressparser": "^1.0.1",
+    "async": "^2.0.0-rc.4",
     "extend": "^3.0.0",
+    "nodemailer-attachments-parser": "^1.0.0",
+    "nodemailer-build-attachment": "^1.0.3",
     "postmark": "^1.2.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "grunt": "^1.0.1",
     "grunt-contrib-jshint": "^1.0.0",
+    "libbase64": "^0.1.0",
     "load-grunt-tasks": "^3.5.0",
     "mocha": "^2.4.5",
     "sinon": "^1.17.3"

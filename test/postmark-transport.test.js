@@ -2,10 +2,13 @@
 
 'use strict';
 
-var sinon = require('sinon'),
-  expect = require('chai').expect,
-  postmarkTransport = require('../'),
-  pkg = require('../package.json');
+var sinon = require('sinon');
+var libbase64 = require('libbase64');
+var fs = require('fs');
+var path = require('path');
+var expect = require('chai').expect;
+var postmarkTransport = require('../');
+var pkg = require('../package.json');
 
 describe('PostmarkTransport', function () {
   var sandbox,
@@ -15,7 +18,7 @@ describe('PostmarkTransport', function () {
   beforeEach(function () {
     options = {
       auth: {
-        apiKey: 'POSTMARK_API_TEST'
+        apiKey: 'POSTMARK_API_KEY'
       }
     };
   });
@@ -56,7 +59,8 @@ describe('PostmarkTransport', function () {
           Subject: '',
           TextBody: '',
           HtmlBody: '',
-          Headers: []
+          Headers: [],
+          Attachments: []
         });
         done();
       });
@@ -354,6 +358,44 @@ describe('PostmarkTransport', function () {
               Value: 'key value'
             }
           ]);
+          done();
+        });
+      });
+    });
+
+    describe('attachments', function () {
+      var encodedLicense;
+
+      beforeEach(function (done) {
+        fs.readFile(path.join(__dirname, '..', 'LICENSE'), function (err, data) {
+          encodedLicense = libbase64.encode(data);
+          done();
+        });
+      });
+
+      it('should be parsed', function (done) {
+        var names = ['license.txt', 'attachment-2.txt'];
+        var contents = [encodedLicense, 'aGVsbG8gd29ybGQ='];
+
+        mail.data.attachments = [
+          {
+            filename: 'license.txt',
+            href: 'https://raw.github.com/killmenot/nodemailer-postmark-transport/master/LICENSE'
+          },
+          {
+            path: 'data:text/plain;base64,aGVsbG8gd29ybGQ='
+          }
+        ];
+
+        transport.send(mail, function () {
+          var message = sendEmailStub.args[0][0];
+
+          message.Attachments.forEach(function (attachment, i) {
+            expect(attachment.Name).to.equal(names[i]);
+            expect(attachment.Content.toString()).to.equal(contents[i]);
+            expect(attachment.ContentType).to.equal('text/plain');
+          });
+
           done();
         });
       });
