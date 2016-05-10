@@ -18,7 +18,7 @@ describe('PostmarkTransport', function () {
   beforeEach(function () {
     options = {
       auth: {
-        apiKey: 'POSTMARK_API_KEY'
+        apiKey: 'POSTMARK_API_TEST'
       }
     };
   });
