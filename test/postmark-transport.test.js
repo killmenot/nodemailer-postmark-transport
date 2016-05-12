@@ -1,26 +1,68 @@
-/* globals afterEach, beforeEach, describe, it */
+/* globals beforeEach, describe, it */
 
 'use strict';
 
-var sinon = require('sinon');
-var libbase64 = require('libbase64');
-var fs = require('fs');
-var path = require('path');
+var async = require('async');
 var expect = require('chai').expect;
 var postmarkTransport = require('../');
 var pkg = require('../package.json');
 
+function capitalize(s) {
+    return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 describe('PostmarkTransport', function () {
-  var sandbox,
-    transport,
-    options;
+  var transport;
+  var options;
+  var mails;
 
   beforeEach(function () {
+    mails = [
+      {
+        data: {
+          from: 'noreply@example.org',
+          to: 'jane@example.org',
+          subject: 'Hello Jane',
+          html: '<h1>Hello Jane</h1>',
+          text: 'Hello Jane',
+          headers:[{
+            key: 'X-Key-Name',
+            value: 'key value1'
+          }],
+          attachments: [
+            {
+              path: 'data:text/plain;base64,aGVsbG8gd29ybGQ='
+            }
+          ]
+        }
+      },
+      {
+        data: {
+          from: 'noreply@example.org',
+          to: 'john@example.org',
+          subject: 'Hello John',
+          html: '<h1>Hello John</h1>',
+          text: 'Hello John',
+          headers: {
+            'X-Key-Name': 'key value2'
+          },
+          attachments: [
+            {
+              filename: 'text.txt',
+              content: 'Lorem ipsum..'
+            }
+          ]
+        }
+      }
+    ];
+
     options = {
       auth: {
         apiKey: 'POSTMARK_API_TEST'
       }
     };
+
+    transport = postmarkTransport(options);
   });
 
   it('should expose name and version', function () {
@@ -29,79 +71,81 @@ describe('PostmarkTransport', function () {
     expect(transport.version).to.equal(pkg.version);
   });
 
-  describe('send()', function () {
-    var mail,
-      sendEmailStub;
+  describe('#_parse', function () {
+    var mail;
 
     beforeEach(function () {
-      transport = postmarkTransport(options);
-      sandbox = sinon.sandbox.create();
-
-      mail = {
-        data: {}
-      };
-
-      sendEmailStub = sandbox.stub(transport.client, 'sendEmail').yields(null, {});
-    });
-
-    afterEach(function () {
-      sandbox.restore();
+      mail = mails[0];
+      mails = [mail];
     });
 
     it('defaults', function (done) {
-      transport.send(mail, function () {
-        var message = sendEmailStub.args[0][0];
-        expect(message).to.eql({
-          From: '',
-          To: '',
-          Cc: '',
-          Bcc: '',
-          Subject: '',
-          TextBody: '',
-          HtmlBody: '',
-          Headers: [],
-          Attachments: []
-        });
+      delete mail.data;
+
+      var expected = {
+        From: '',
+        To: '',
+        Cc: '',
+        Bcc: '',
+        Subject: '',
+        TextBody: '',
+        HtmlBody: '',
+        Headers: [],
+        Attachments: []
+      };
+
+      transport._parse(mails, function (err, messages) {
+        expect(messages[0]).to.eql(expected);
         done();
       });
     });
 
-    describe('to', function () {
-      it('should parse plain email address', function (done) {
-        mail.data.to = 'foo@example.org';
+    describe('to / from / cc / bcc', function () {
+      var validator = function (address, expected, fields, callback) {
+        if (typeof fields === 'function') {
+          callback = fields;
+          fields = ['from', 'to', 'cc', 'bcc'];
+        }
 
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.To).to.equal('foo@example.org');
-          done();
-        });
+        async.eachSeries(fields, function (field, next) {
+          mail.data[field] = address;
+
+          transport._parse(mails, function (err, messages) {
+            if (err) {
+              return next(err);
+            }
+
+            expect(messages[0][capitalize(field)]).to.equal(expected);
+            next();
+          });
+        }, callback);
+      };
+
+      it('should parse plain email address', function (done) {
+        var address = 'foo@example.org';
+        var expected = 'foo@example.org';
+        validator(address, expected, done);
       });
 
       it('should parse email address with formatted name', function (done) {
-        mail.data.to = '"John Doe" <john.doe@example.org>';
-
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.To).to.equal('"John Doe" <john.doe@example.org>');
-          done();
-        });
+        var address = '"John Doe" <john.doe@example.org>';
+        var expected = '"John Doe" <john.doe@example.org>';
+        validator(address, expected, done);
       });
 
       it('should parse address object', function (done) {
-        mail.data.to = {
+        var address = {
           name: 'Jane Doe',
           address: 'jane.doe@example.org'
         };
 
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.To).to.equal('"Jane Doe" <jane.doe@example.org>');
-          done();
-        });
+        var expected = '"Jane Doe" <jane.doe@example.org>';
+
+        validator(address, expected, done);
       });
 
-      it('should parse mixed', function (done) {
-        mail.data.to = [
+      it('should parse mixed to / cc / bcc fields', function (done) {
+        var address = [
           'foo@example.org',
           '"Bar Bar" bar@example.org',
           '"Jane Doe" <jane.doe@example.org>, "John, Doe" <john.doe@example.org>',
@@ -111,101 +155,19 @@ describe('PostmarkTransport', function () {
           }
         ];
 
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.To).to.equal([
-            'foo@example.org',
-            '"Bar Bar" <bar@example.org>',
-            '"Jane Doe" <jane.doe@example.org>',
-            '"John, Doe" <john.doe@example.org>',
-            '"Baz" <baz@example.org>',
-          ].join(','));
-          done();
-        });
-      });
-    });
+        var expected = [
+         'foo@example.org',
+          '"Bar Bar" <bar@example.org>',
+          '"Jane Doe" <jane.doe@example.org>',
+          '"John, Doe" <john.doe@example.org>',
+          '"Baz" <baz@example.org>',
+        ].join(',');
 
-    describe('from', function () {
-      it('should parse plain email address', function (done) {
-        mail.data.from = 'foo@example.org';
-
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.From).to.equal('foo@example.org');
-          done();
-        });
+        validator(address, expected, ['to', 'cc', 'bcc'], done);
       });
 
-      it('should parse email address with formatted name', function (done) {
-        mail.data.from = '"John Doe" <john.doe@example.org>';
-
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.From).to.equal('"John Doe" <john.doe@example.org>');
-          done();
-        });
-      });
-
-      it('should parse address object', function (done) {
-        mail.data.from = {
-          name: 'Jane Doe',
-          address: 'jane.doe@example.org'
-        };
-
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.From).to.equal('"Jane Doe" <jane.doe@example.org>');
-          done();
-        });
-      });
-
-      it('should parse mixed', function (done) {
-        mail.data.from = '"Jane Doe" <jane.doe@example.org>, "John, Doe" <john.doe@example.org>';
-
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.From).to.equal('"Jane Doe" <jane.doe@example.org>');
-          done();
-        });
-      });
-    });
-
-    describe('cc', function () {
-      it('should parse plain email address', function (done) {
-        mail.data.cc = 'foo@example.org';
-
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.Cc).to.equal('foo@example.org');
-          done();
-        });
-      });
-
-      it('should parse email address with formatted name', function (done) {
-        mail.data.cc = '"John Doe" <john.doe@example.org>';
-
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.Cc).to.equal('"John Doe" <john.doe@example.org>');
-          done();
-        });
-      });
-
-      it('should parse address object', function (done) {
-        mail.data.cc = {
-          name: 'Jane Doe',
-          address: 'jane.doe@example.org'
-        };
-
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.Cc).to.equal('"Jane Doe" <jane.doe@example.org>');
-          done();
-        });
-      });
-
-      it('should parse mixed', function (done) {
-        mail.data.cc = [
+      it('should parse mixed from field', function (done) {
+        var address = [
           'foo@example.org',
           '"Bar Bar" bar@example.org',
           '"Jane Doe" <jane.doe@example.org>, "John, Doe" <john.doe@example.org>',
@@ -215,110 +177,40 @@ describe('PostmarkTransport', function () {
           }
         ];
 
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.Cc).to.equal([
-            'foo@example.org',
-            '"Bar Bar" <bar@example.org>',
-            '"Jane Doe" <jane.doe@example.org>',
-            '"John, Doe" <john.doe@example.org>',
-            '"Baz" <baz@example.org>',
-          ].join(','));
-          done();
-        });
-      });
-    });
+        var expected = 'foo@example.org';
 
-    describe('bcc', function () {
-      it('should parse plain email address', function (done) {
-        mail.data.bcc = 'foo@example.org';
-
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.Bcc).to.equal('foo@example.org');
-          done();
-        });
-      });
-
-      it('should parse email address with formatted name', function (done) {
-        mail.data.bcc = '"John Doe" <john.doe@example.org>';
-
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.Bcc).to.equal('"John Doe" <john.doe@example.org>');
-          done();
-        });
-      });
-
-      it('should parse address object', function (done) {
-        mail.data.bcc = {
-          name: 'Jane Doe',
-          address: 'jane.doe@example.org'
-        };
-
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.Bcc).to.equal('"Jane Doe" <jane.doe@example.org>');
-          done();
-        });
-      });
-
-      it('should parse mixed', function (done) {
-        mail.data.bcc = [
-          'foo@example.org',
-          '"Bar Bar" bar@example.org',
-          '"Jane Doe" <jane.doe@example.org>, "John, Doe" <john.doe@example.org>',
-          {
-            name: 'Baz',
-            address: 'baz@example.org'
-          }
-        ];
-
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.Bcc).to.equal([
-            'foo@example.org',
-            '"Bar Bar" <bar@example.org>',
-            '"Jane Doe" <jane.doe@example.org>',
-            '"John, Doe" <john.doe@example.org>',
-            '"Baz" <baz@example.org>',
-          ].join(','));
-          done();
-        });
+        validator(address, expected, ['from'], done);
       });
     });
 
     describe('subject', function () {
-      it('should be passed', function (done) {
+      it('should be parsed', function (done) {
         mail.data.subject = 'Subject';
 
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.Subject).to.equal('Subject');
+        transport._parse(mails, function (err, messages) {
+          expect(messages[0].Subject).to.equal('Subject');
           done();
         });
       });
     });
 
     describe('text', function () {
-      it('should be passed', function (done) {
+      it('should be parsed', function (done) {
         mail.data.text = 'Hello';
 
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.TextBody).to.equal('Hello');
+        transport._parse(mails, function (err, messages) {
+          expect(messages[0].TextBody).to.equal('Hello');
           done();
         });
       });
     });
 
     describe('html', function () {
-      it('should be passed', function (done) {
+      it('should be parsed', function (done) {
         mail.data.html = '<h1>Hello</h1>';
 
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.HtmlBody).to.equal('<h1>Hello</h1>');
+        transport._parse(mails, function (err, messages) {
+          expect(messages[0].HtmlBody).to.equal('<h1>Hello</h1>');
           done();
         });
       });
@@ -330,9 +222,8 @@ describe('PostmarkTransport', function () {
           'X-Key-Name': 'key value'
         };
 
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.Headers).to.eql([
+        transport._parse(mails, function (err, messages) {
+          expect(messages[0].Headers).to.eql([
             {
               Name: 'X-Key-Name',
               Value: 'key value'
@@ -350,9 +241,8 @@ describe('PostmarkTransport', function () {
           }
         ];
 
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-          expect(message.Headers).to.eql([
+        transport._parse(mails, function (err, messages) {
+          expect(messages[0].Headers).to.eql([
             {
               Name: 'X-Key-Name',
               Value: 'key value'
@@ -364,40 +254,67 @@ describe('PostmarkTransport', function () {
     });
 
     describe('attachments', function () {
-      var encodedLicense;
-
-      beforeEach(function (done) {
-        fs.readFile(path.join(__dirname, '..', 'LICENSE'), function (err, data) {
-          encodedLicense = libbase64.encode(data);
-          done();
-        });
-      });
-
       it('should be parsed', function (done) {
-        var names = ['license.txt', 'attachment-2.txt'];
-        var contents = [encodedLicense, 'aGVsbG8gd29ybGQ='];
+        var names = ['text.txt', 'attachment-2.txt'];
+        var contents = ['TG9yZW0gaXBzdW0uLg==', 'aGVsbG8gd29ybGQ='];
 
         mail.data.attachments = [
           {
-            filename: 'license.txt',
-            href: 'https://raw.github.com/killmenot/nodemailer-postmark-transport/master/LICENSE'
+            filename: 'text.txt',
+            content: 'Lorem ipsum..'
           },
           {
             path: 'data:text/plain;base64,aGVsbG8gd29ybGQ='
           }
         ];
 
-        transport.send(mail, function () {
-          var message = sendEmailStub.args[0][0];
-
-          message.Attachments.forEach(function (attachment, i) {
+        transport._parse(mails, function (err, messages) {
+          messages[0].Attachments.forEach(function (attachment, i) {
             expect(attachment.Name).to.equal(names[i]);
             expect(attachment.Content.toString()).to.equal(contents[i]);
             expect(attachment.ContentType).to.equal('text/plain');
           });
-
           done();
         });
+      });
+      });
+  });
+
+  describe('#send', function () {
+    it('should be able to send a single mail', function (done) {
+      transport.send(mails[0], function (err, info) {
+        expect(info).to.be.an('object');
+
+        var accepted = info.accepted;
+        expect(accepted[0].To).to.equal('jane@example.org');
+        expect(accepted[0].MessageID).to.be.a('string');
+        expect(accepted[0].SubmittedAt).to.be.a('string');
+        expect(accepted[0].ErrorCode).to.equal(0);
+        expect(accepted[0].Message).to.equal('Test job accepted');
+        done();
+      });
+    });
+
+  });
+
+  describe('#sendBatch', function () {
+    it('should be able to send multiple mails', function (done) {
+      transport.sendBatch(mails, function (err, info) {
+        expect(info).to.be.an('object');
+
+        var accepted = info.accepted;
+        expect(accepted[0].To).to.equal('jane@example.org');
+        expect(accepted[0].MessageID).to.be.a('string');
+        expect(accepted[0].SubmittedAt).to.be.a('string');
+        expect(accepted[0].ErrorCode).to.equal(0);
+        expect(accepted[0].Message).to.equal('Test job accepted');
+
+        expect(accepted[1].To).to.equal('john@example.org');
+        expect(accepted[1].MessageID).to.be.a('string');
+        expect(accepted[1].SubmittedAt).to.be.a('string');
+        expect(accepted[1].ErrorCode).to.equal(0);
+        expect(accepted[1].Message).to.equal('Test job accepted');
+        done();
       });
     });
   });
