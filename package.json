@@ -31,7 +31,8 @@
     "extend": "^3.0.0",
     "mailcomposer": "^3.9.0",
     "nodemailer-build-attachment": "^1.0.3",
-    "postmark": "^1.2.1"
+    "postmark": "^1.2.1",
+    "nodemailer-attachments-parser": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
