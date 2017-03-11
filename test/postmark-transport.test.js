@@ -90,6 +90,7 @@ describe('PostmarkTransport', function () {
         Subject: '',
         TextBody: '',
         HtmlBody: '',
+        ReplyTo: '',
         Headers: [],
         Attachments: []
       };
@@ -104,7 +105,7 @@ describe('PostmarkTransport', function () {
       var validator = function (address, expected, fields, callback) {
         if (typeof fields === 'function') {
           callback = fields;
-          fields = ['from', 'to', 'cc', 'bcc'];
+          fields = ['from', 'to', 'cc', 'bcc', 'replyTo'];
         }
 
         async.eachSeries(fields, function (field, next) {
@@ -144,7 +145,7 @@ describe('PostmarkTransport', function () {
         validator(address, expected, done);
       });
 
-      it('should parse mixed to / cc / bcc fields', function (done) {
+      it('should parse mixed address formats in to / cc / bcc fields', function (done) {
         var address = [
           'foo@example.org',
           '"Bar Bar" bar@example.org',
@@ -166,7 +167,7 @@ describe('PostmarkTransport', function () {
         validator(address, expected, ['to', 'cc', 'bcc'], done);
       });
 
-      it('should parse mixed from field', function (done) {
+      it('should parse first address in from field only', function (done) {
         var address = [
           'foo@example.org',
           '"Bar Bar" bar@example.org',
@@ -294,7 +295,6 @@ describe('PostmarkTransport', function () {
         done();
       });
     });
-
   });
 
   describe('#sendBatch', function () {
