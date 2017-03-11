@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/killmenot/nodemailer-postmark-transport",
   "pre-commit": [
-    "npm test"
+    "test"
   ],
   "dependencies": {
     "addressparser": "^1.0.1",
