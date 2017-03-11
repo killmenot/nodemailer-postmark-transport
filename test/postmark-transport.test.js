@@ -1,10 +1,11 @@
-/* globals beforeEach, describe, it */
+/* globals beforeEach, describe, it, xit */
 
 'use strict';
 
 var async = require('async');
 var expect = require('chai').expect;
 var postmarkTransport = require('../');
+var Message = require('../lib/message');
 var pkg = require('../package.json');
 
 function capitalize(s) {
@@ -82,18 +83,7 @@ describe('PostmarkTransport', function () {
     it('defaults', function (done) {
       delete mail.data;
 
-      var expected = {
-        From: '',
-        To: '',
-        Cc: '',
-        Bcc: '',
-        Subject: '',
-        TextBody: '',
-        HtmlBody: '',
-        ReplyTo: '',
-        Headers: [],
-        Attachments: []
-      };
+      var expected = new Message();
 
       transport._parse(mails, function (err, messages) {
         expect(messages[0]).to.eql(expected);
@@ -101,7 +91,7 @@ describe('PostmarkTransport', function () {
       });
     });
 
-    describe('to / from / cc / bcc', function () {
+    describe('to / from / cc / bcc / replyTo', function () {
       var validator = function (address, expected, fields, callback) {
         if (typeof fields === 'function') {
           callback = fields;
@@ -283,6 +273,29 @@ describe('PostmarkTransport', function () {
 
   describe('#send', function () {
     it('should be able to send a single mail', function (done) {
+      transport.send(mails[0], function (err, info) {
+        expect(info).to.be.an('object');
+
+        var accepted = info.accepted;
+        expect(accepted[0].To).to.equal('jane@example.org');
+        expect(accepted[0].MessageID).to.be.a('string');
+        expect(accepted[0].SubmittedAt).to.be.a('string');
+        expect(accepted[0].ErrorCode).to.equal(0);
+        expect(accepted[0].Message).to.equal('Test job accepted');
+        done();
+      });
+    });
+
+    xit('should be able to send a single mail with template', function (done) {
+      delete mails[0].data.subject;
+      delete mails[0].data.html;
+      delete mails[0].data.text;
+
+      mails[0].data.templateId = 0;
+      mails[0].data.templateModel = {
+        foo: 'bar'
+      };
+
       transport.send(mails[0], function (err, info) {
         expect(info).to.be.an('object');
 
