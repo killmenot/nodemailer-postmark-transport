@@ -29,7 +29,7 @@
     "addressparser": "^1.0.1",
     "async": "^2.0.0-rc.4",
     "extend": "^3.0.0",
-    "mailcomposer": "^3.9.0",
+    "mailcomposer": "^4.0.1",
     "nodemailer-build-attachment": "^1.0.3",
     "postmark": "^1.2.1"
   },
