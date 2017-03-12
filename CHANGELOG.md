@@ -1,5 +1,14 @@
 
 
+<a name="1.2.0"></a>
+### 1.2.0 (2017-03-12)
+
+
+#### Features
+
+* add ReplyTo support.
+* add Postmark templates support.
+
 <a name="1.1.0"></a>
 ### 1.1.0 (2016-05-10)
 

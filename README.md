@@ -6,33 +6,30 @@ A Postmark transport for Nodemailer.
 [![Dependency Status](https://gemnasium.com/badges/github.com/killmenot/nodemailer-postmark-transport.svg)](https://gemnasium.com/github.com/killmenot/nodemailer-postmark-transport)
 [![npm version](https://badge.fury.io/js/nodemailer-postmark-transport.svg)](https://badge.fury.io/js/nodemailer-postmark-transport)
 
-## Example
+
+## Examples
+
+### Quick start
 
 ```javascript
 'use strict';
 
-var nodemailer = require('nodemailer');
-
-var postmarkTransport = require('nodemailer-postmark-transport');
-
-var transport = nodemailer.createTransport(postmarkTransport({
+const nodemailer = require('nodemailer');
+const postmarkTransport = require('nodemailer-postmark-transport');
+const transport = nodemailer.createTransport(postmarkTransport({
   auth: {
     apiKey: 'key'
   }
 }));
-
-transport.sendMail({
+const mail = {
   from: 'john.doe@example.org',
   to: 'jane.doe@example.org',
   subject: 'Hello',
-  html: '<h1>Hello</h1>',
-  attachments: [
-    {
-      path: 'data:text/plain;base64,aGVsbG8gd29ybGQ='
-    }
-  }
-  ]
-}, function(err, info) {
+  text: 'Hello',
+  html: '<h1>Hello</h1>'
+};
+
+transport.sendMail(mail, function (err, info) {
   if (err) {
     console.error(err);
   } else {
@@ -41,10 +38,73 @@ transport.sendMail({
 });
 ```
 
-## Attachments
+### Use Postmark templates feature
 
-References to nodemailer attachments [docs](https://github.com/nodemailer/nodemailer#attachments) and Postmark attachments [docs](http://developer.postmarkapp.com/developer-send-api.html)
+Read about Postmark templates here: [Special delivery: Postmark templates](https://postmarkapp.com/blog/special-delivery-postmark-templates)
 
+```javascript
+'use strict';
+
+const nodemailer = require('nodemailer');
+const postmarkTransport = require('nodemailer-postmark-transport');
+const transport = nodemailer.createTransport(postmarkTransport({
+  auth: {
+    apiKey: 'key'
+  }
+}));
+const mail = {
+  from: 'john.doe@example.org',
+  to: 'jane.doe@example.org',
+  templateId: 1234,
+  templateModel: {
+    foo: 'bar'
+  }
+};
+
+transport.sendMail(mail, function (err, info) {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(info);
+  }
+});
+```
+
+### Use attachments
+
+References to nodemailer attachments [docs](https://community.nodemailer.com/using-attachments/) and [Postmark attachments docs](http://developer.postmarkapp.com/developer-send-api.html)
+
+```javascript
+'use strict';
+
+const nodemailer = require('nodemailer');
+const postmarkTransport = require('nodemailer-postmark-transport');
+const transport = nodemailer.createTransport(postmarkTransport({
+  auth: {
+    apiKey: 'key'
+  }
+}));
+const mail = {
+  from: 'john.doe@example.org',
+  to: 'jane.doe@example.org',
+  subject: 'Hello',
+  text: 'Hello, This email contains attachments',
+  html: '<h1>Hello, This email contains attachments</h1>',
+  attachments: [
+    {
+      path: 'data:text/plain;base64,aGVsbG8gd29ybGQ='
+    }
+  ]
+};
+
+transport.sendMail(mail, function (err, info) {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log(info);
+  }
+});
+```
 
 ## Using Postmark API options
 
