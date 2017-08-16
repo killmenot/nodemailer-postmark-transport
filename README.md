@@ -8,6 +8,20 @@ A Postmark transport for Nodemailer.
 [![npm version](https://badge.fury.io/js/nodemailer-postmark-transport.svg)](https://badge.fury.io/js/nodemailer-postmark-transport)
 
 
+## Requirements
+
+ - Node.js 4+
+
+> **Note:** If you node version is less than 4 should use nodemailer-postmark-transport@1.2.0
+
+
+## Install
+
+```
+npm install nodemailer-postmark-transport
+```
+
+
 ## Examples
 
 ### Quick start
