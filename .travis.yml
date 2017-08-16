@@ -4,6 +4,8 @@ branches:
   except:
   - gh-pages
 node_js:
+  - '8'
+  - '7'
   - '6'
   - '5'
   - '4'
@@ -11,5 +13,5 @@ node_js:
   - '0.11'
   - '0.10'
   - 'iojs'
-before_script:
-  - npm install grunt-cli -g
+after_success:
+  - npm run coveralls:unit

@@ -1,11 +1,17 @@
 {
   "name": "nodemailer-postmark-transport",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Postmark transport for Nodemailer",
   "main": "index.js",
   "scripts": {
-    "test": "grunt && mocha"
+    "lint": "grunt",
+    "test": "mocha",
+    "coverage": "istanbul cover _mocha",
+    "coveralls": "npm run coverage && coveralls < coverage/lcov.info"
   },
+  "pre-commit": [
+    "test"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:killmenot/nodemailer-postmark-transport.git"
@@ -25,22 +31,21 @@
     "url": "https://github.com/killmenot/nodemailer-postmark-transport/issues"
   },
   "homepage": "https://github.com/killmenot/nodemailer-postmark-transport",
-  "pre-commit": [
-    "test"
-  ],
   "dependencies": {
     "addressparser": "^1.0.1",
-    "async": "^2.1.5",
-    "mailcomposer": "^4.0.1",
-    "nodemailer-build-attachment": "^1.0.3",
-    "postmark": "^1.3.1"
+    "async": "^2.5.0",
+    "mailcomposer": "^4.0.2",
+    "nodemailer-build-attachment": "^1.0.4",
+    "postmark": "^1.4.1"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "chai": "^4.1.1",
+    "coveralls": "^2.13.1",
     "grunt": "^1.0.1",
     "grunt-contrib-jshint": "^1.1.0",
+    "istanbul": "^0.4.5",
     "load-grunt-tasks": "^3.5.2",
-    "mocha": "^3.2.0",
+    "mocha": "^3.5.0",
     "pre-commit": "^1.2.2"
   }
 }
