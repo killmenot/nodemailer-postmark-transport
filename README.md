@@ -131,7 +131,7 @@ const transport = nodemailer.createTransport(postmarkTransport({
     apiKey: 'key'
   },
   postmarkOptions: {
-
+    /* ... */
   }
 }));
 ```
