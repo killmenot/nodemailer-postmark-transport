@@ -362,6 +362,32 @@ describe('PostmarkTransport', () => {
         });
       });
     });
+
+    describe('template', () => {
+      it('should be parsed', (done) => {
+        mail.data.templateId = 'foo';
+        mail.data.templateModel = { bar: 'baz' };
+
+        transport._parse(mails, (err, messages) => {
+          expect(messages[0].TemplateId).eql('foo');
+          expect(messages[0].TemplateModel).eql({ bar: 'baz' });
+          done();
+        });
+      });
+
+      it('should be parsed (inline css)', (done) => {
+        mail.data.templateId = 'foo';
+        mail.data.templateModel = { bar: 'baz' };
+        mail.data.inlineCss = true;
+
+        transport._parse(mails, (err, messages) => {
+          expect(messages[0].TemplateId).equal('foo');
+          expect(messages[0].TemplateModel).eql({ bar: 'baz' });
+          expect(messages[0].InlineCss).equal(true);
+          done();
+        });
+      });
+    });
   });
 
   describe('#send', () => {
