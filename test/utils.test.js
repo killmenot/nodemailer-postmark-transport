@@ -1,14 +1,12 @@
-/* globals describe */
-
 'use strict';
 
-describe('utils', function () {
-  describe('addressFormatter()', function () {
+describe('utils', () => {
+  describe('#addressFormatter', () => {
   });
 
-  describe('addressParser()', function () {
+  describe('#addressParser', () => {
   });
 
-  describe('headersParser()', function () {
+  describe('#headersParser', () => {
   });
 });

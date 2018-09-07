@@ -16,5 +16,15 @@
   "undef": true,
   "unused": true,
   "trailing": true,
-  "validthis": true
+  "validthis": true,
+  "globals": {
+    /* MOCHA */
+    "describe": false,
+    "it": false,
+    "xit": false,
+    "before": false,
+    "beforeEach": false,
+    "after": false,
+    "afterEach": false
+  }
 }
