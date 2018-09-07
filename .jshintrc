@@ -3,9 +3,11 @@
   "bitwise": true,
   "camelcase": true,
   "curly": true,
+  "esversion": 6,
   "forin": true,
   "immed": true,
   "latedef": true,
+  "laxcomma": true,
   "newcap": true,
   "noarg": true,
   "noempty": true,
@@ -14,5 +16,5 @@
   "undef": true,
   "unused": true,
   "trailing": true,
-  "laxcomma": true
+  "validthis": true
 }

@@ -1,3 +1,0 @@
-instrumentation:
-  root: lib
-  include-all-sources: true
