@@ -291,6 +291,77 @@ describe('PostmarkTransport', () => {
         });
       });
     });
+
+    describe('trackOpens', () => {
+      it('should be ignored', (done) => {
+        transport._parse(mails, (err, messages) => {
+          expect(messages[0].TrackOpens).be.an('undefined');
+          done();
+        });
+      });
+
+      it('should be parsed', (done) => {
+        const values = [true, false];
+
+        function iteratee(value, cb) {
+          mail.data.trackOpens = value;
+
+          transport._parse(mails, (err, messages) => {
+            if (err) { return cb(err); }
+            cb(null, messages[0]);
+          });
+        }
+
+        async.mapSeries(values, iteratee, (err, results) => {
+          if (err) { return done(err); }
+
+          results.forEach((actual, i) => {
+            expect(actual.TrackOpens).equal(values[i]);
+          });
+          done();
+        });
+      });
+    });
+
+    describe('trackLinks', () => {
+      it('should be ignored', (done) => {
+        transport._parse(mails, (err, messages) => {
+          expect(messages[0].TrackLinks).be.an('undefined');
+          done();
+        });
+      });
+
+      it('should return error', (done) => {
+        mail.data.trackLinks = 'foo';
+
+        transport._parse(mails, (err) => {
+          expect(err.message).equal('"foo" is wrong value for link tracking. Valid values are: None, HtmlAndText, HtmlOnly, TextOnly');
+          done();
+        });
+      });
+
+      it('should be parsed', (done) => {
+        const values = ['None', 'HtmlAndText', 'HtmlOnly', 'TextOnly'];
+
+        function iteratee(value, cb) {
+          mail.data.trackLinks = value;
+
+          transport._parse(mails, (err, messages) => {
+            if (err) { return cb(err); }
+            cb(null, messages[0]);
+          });
+        }
+
+        async.mapSeries(values, iteratee, (err, results) => {
+          if (err) { return done(err); }
+
+          results.forEach((actual, i) => {
+            expect(actual.TrackLinks).equal(values[i]);
+          });
+          done();
+        });
+      });
+    });
   });
 
   describe('#send', () => {

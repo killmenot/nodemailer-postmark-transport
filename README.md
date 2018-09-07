@@ -121,11 +121,36 @@ transport.sendMail(mail, function (err, info) {
 });
 ```
 
-## Using Postmark.js options
+### Access to Postmark.js client
 
-[postmark.js](https://github.com/wildbit/postmark.js) library allows to specify configuration options for its client. You can get more details about it [here](https://github.com/wildbit/postmark.js/blob/master/lib/postmark/clientDefaults.js#L15)
+You can find more details about [Postmark.js](https://github.com/wildbit/postmark.js) in documentation [here](https://wildbit.github.io/postmark.js)
 
 ```javascript
+'use strict';
+
+const nodemailer = require('nodemailer');
+const postmarkTransport = require('nodemailer-postmark-transport');
+const transporter = postmarkTransport({
+  auth: {
+    apiKey: 'key'
+  }
+});
+const transport = nodemailer.createTransport(transporter);
+
+// transporter.client -> reference to Postmark.js client
+// transport.mailer.transporter.client -> reference to Postmark.js client
+
+```
+
+### Provide Postmark.js client with options
+
+[Postmark.js](https://github.com/wildbit/postmark.js) library allows to specify configuration options for its client. You can get more details about it [here](https://github.com/wildbit/postmark.js/blob/master/lib/postmark/clientDefaults.js#L15)
+
+```javascript
+'use strict';
+
+const nodemailer = require('nodemailer');
+const postmarkTransport = require('nodemailer-postmark-transport');
 const transport = nodemailer.createTransport(postmarkTransport({
   auth: {
     apiKey: 'key'
@@ -135,3 +160,28 @@ const transport = nodemailer.createTransport(postmarkTransport({
   }
 }));
 ```
+
+## License
+
+    The MIT License (MIT)
+
+    Copyright (c) Alexey Kucherenko
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+
