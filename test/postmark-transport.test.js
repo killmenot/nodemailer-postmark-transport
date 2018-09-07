@@ -66,8 +66,8 @@ describe('PostmarkTransport', () => {
 
   it('should expose name and version', () => {
     transport = postmarkTransport(options);
-    expect(transport.name).to.equal('Postmark');
-    expect(transport.version).to.equal(pkg.version);
+    expect(transport.name).equal('Postmark');
+    expect(transport.version).equal(pkg.version);
   });
 
   describe('#_parse', () => {
@@ -84,7 +84,7 @@ describe('PostmarkTransport', () => {
       const expected = new Message();
 
       transport._parse(mails, (err, messages) => {
-        expect(messages[0]).to.eql(expected);
+        expect(messages[0]).eql(expected);
         done();
       });
     });
@@ -104,7 +104,7 @@ describe('PostmarkTransport', () => {
               return next(err);
             }
 
-            expect(messages[0][capitalize(field)]).to.equal(expected);
+            expect(messages[0][capitalize(field)]).equal(expected);
             next();
           });
         }, callback);
@@ -177,7 +177,7 @@ describe('PostmarkTransport', () => {
         mail.data.subject = 'Subject';
 
         transport._parse(mails, (err, messages) => {
-          expect(messages[0].Subject).to.equal('Subject');
+          expect(messages[0].Subject).equal('Subject');
           done();
         });
       });
@@ -188,7 +188,7 @@ describe('PostmarkTransport', () => {
         mail.data.text = 'Hello';
 
         transport._parse(mails, (err, messages) => {
-          expect(messages[0].TextBody).to.equal('Hello');
+          expect(messages[0].TextBody).equal('Hello');
           done();
         });
       });
@@ -199,7 +199,7 @@ describe('PostmarkTransport', () => {
         mail.data.html = '<h1>Hello</h1>';
 
         transport._parse(mails, (err, messages) => {
-          expect(messages[0].HtmlBody).to.equal('<h1>Hello</h1>');
+          expect(messages[0].HtmlBody).equal('<h1>Hello</h1>');
           done();
         });
       });
@@ -212,7 +212,7 @@ describe('PostmarkTransport', () => {
         };
 
         transport._parse(mails, (err, messages) => {
-          expect(messages[0].Headers).to.eql([
+          expect(messages[0].Headers).eql([
             {
               Name: 'X-Key-Name',
               Value: 'key value'
@@ -232,7 +232,7 @@ describe('PostmarkTransport', () => {
         ];
 
         transport._parse(mails, (err, messages) => {
-          expect(messages[0].Headers).to.eql([
+          expect(messages[0].Headers).eql([
             {
               Name: 'X-Key-Name',
               Value: 'key value'
@@ -260,29 +260,51 @@ describe('PostmarkTransport', () => {
 
         transport._parse(mails, (err, messages) => {
           messages[0].Attachments.forEach((attachment, i) => {
-            expect(attachment.Name).to.equal(names[i]);
-            expect(attachment.Content.toString()).to.equal(contents[i]);
-            expect(attachment.ContentType).to.equal('text/plain');
+            expect(attachment.Name).equal(names[i]);
+            expect(attachment.Content.toString()).equal(contents[i]);
+            expect(attachment.ContentType).equal('text/plain');
           });
 
           done();
         });
       });
+    });
+
+    describe('tag', () => {
+      it('should be parsed', (done) => {
+        mail.data.tag = 'quux';
+
+        transport._parse(mails, (err, messages) => {
+          expect(messages[0].Tag).equal('quux');
+          done();
+        });
       });
+    });
+
+    describe('metadata', () => {
+      it('should be parsed', (done) => {
+        mail.data.metadata = { foo: 'bar' };
+
+        transport._parse(mails, (err, messages) => {
+          expect(messages[0].Metadata).eql({ foo: 'bar' });
+          done();
+        });
+      });
+    });
   });
 
   describe('#send', () => {
     it('should be able to send a single mail', (done) => {
       transport.send(mails[0], (err, info) => {
-        expect(info).to.be.an('object');
+        expect(info).be.an('object');
 
         let accepted = info.accepted;
 
-        expect(accepted[0].To).to.equal('jane@example.org');
-        expect(accepted[0].MessageID).to.be.a('string');
-        expect(accepted[0].SubmittedAt).to.be.a('string');
-        expect(accepted[0].ErrorCode).to.equal(0);
-        expect(accepted[0].Message).to.equal('Test job accepted');
+        expect(accepted[0].To).equal('jane@example.org');
+        expect(accepted[0].MessageID).be.a('string');
+        expect(accepted[0].SubmittedAt).be.a('string');
+        expect(accepted[0].ErrorCode).equal(0);
+        expect(accepted[0].Message).equal('Test job accepted');
 
         done();
       });
@@ -299,15 +321,15 @@ describe('PostmarkTransport', () => {
       };
 
       transport.send(mails[0], function (err, info) {
-        expect(info).to.be.an('object');
+        expect(info).be.an('object');
 
         let accepted = info.accepted;
 
-        expect(accepted[0].To).to.equal('jane@example.org');
-        expect(accepted[0].MessageID).to.be.a('string');
-        expect(accepted[0].SubmittedAt).to.be.a('string');
-        expect(accepted[0].ErrorCode).to.equal(0);
-        expect(accepted[0].Message).to.equal('Test job accepted');
+        expect(accepted[0].To).equal('jane@example.org');
+        expect(accepted[0].MessageID).be.a('string');
+        expect(accepted[0].SubmittedAt).be.a('string');
+        expect(accepted[0].ErrorCode).equal(0);
+        expect(accepted[0].Message).equal('Test job accepted');
 
         done();
       });
@@ -317,21 +339,21 @@ describe('PostmarkTransport', () => {
   describe('#sendBatch', () => {
     it('should be able to send multiple mails', (done) => {
       transport.sendBatch(mails, (err, info) => {
-        expect(info).to.be.an('object');
+        expect(info).be.an('object');
 
         let accepted = info.accepted;
 
-        expect(accepted[0].To).to.equal('jane@example.org');
-        expect(accepted[0].MessageID).to.be.a('string');
-        expect(accepted[0].SubmittedAt).to.be.a('string');
-        expect(accepted[0].ErrorCode).to.equal(0);
-        expect(accepted[0].Message).to.equal('Test job accepted');
+        expect(accepted[0].To).equal('jane@example.org');
+        expect(accepted[0].MessageID).be.a('string');
+        expect(accepted[0].SubmittedAt).be.a('string');
+        expect(accepted[0].ErrorCode).equal(0);
+        expect(accepted[0].Message).equal('Test job accepted');
 
-        expect(accepted[1].To).to.equal('john@example.org');
-        expect(accepted[1].MessageID).to.be.a('string');
-        expect(accepted[1].SubmittedAt).to.be.a('string');
-        expect(accepted[1].ErrorCode).to.equal(0);
-        expect(accepted[1].Message).to.equal('Test job accepted');
+        expect(accepted[1].To).equal('john@example.org');
+        expect(accepted[1].MessageID).be.a('string');
+        expect(accepted[1].SubmittedAt).be.a('string');
+        expect(accepted[1].ErrorCode).equal(0);
+        expect(accepted[1].Message).equal('Test job accepted');
 
         done();
       });
