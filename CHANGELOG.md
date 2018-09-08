@@ -1,11 +1,23 @@
 
+<a name="1.4.0"></a>
+### 1.4.0 (2018-09-08)
+
+#### Features
+
+* add Tag, Metadata, TrackOpens and TrackLinks support
+
+#### Misc
+
+* Bug fixes and improvements
+
+
 <a name="1.3.0"></a>
 ### 1.3.0 (2017-08-16)
 
 #### Misc
 
 * bump deps
-* drop support node.js under 4 version
+* drop support Node.js less than 4 version
 
 
 
