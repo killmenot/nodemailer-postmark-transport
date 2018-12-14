@@ -243,6 +243,59 @@ describe('PostmarkTransport', () => {
       });
     });
 
+    describe('headers (multiple)', () => {
+      it('should parse {"X-Key-Name": ["key value1", "key value2"]}', (done) => {
+        mail.data.headers = {
+          'X-Key-Name': [
+            'key value1',
+            'key value2'
+          ]
+        };
+
+        transport._parse(mails, (err, messages) => {
+          expect(messages[0].Headers).eql([
+            {
+              Name: 'X-Key-Name',
+              Value: 'key value1'
+            },
+            {
+              Name: 'X-Key-Name',
+              Value: 'key value2'
+            }
+          ]);
+
+          done();
+        });
+      });
+
+      it('should parse [{key: "X-Key-Name", value: "key value1"}, {key: "X-Key-Name", value: "key value2"}]', (done) => {
+        mail.data.headers = [
+          {
+            key: 'X-Key-Name',
+            value: 'key value1'
+          },
+          {
+            key: 'X-Key-Name',
+            value: 'key value2'
+          }
+        ];
+
+        transport._parse(mails, (err, messages) => {
+          expect(messages[0].Headers).eql([
+            {
+              Name: 'X-Key-Name',
+              Value: 'key value1'
+            },
+            {
+              Name: 'X-Key-Name',
+              Value: 'key value2'
+            }
+          ]);
+          done();
+        });
+      });
+    });
+
     describe('attachments', () => {
       it('should be parsed', (done) => {
         const names = ['text.txt', 'attachment-2.txt'];
