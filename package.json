@@ -46,17 +46,17 @@
   },
   "dependencies": {
     "addressparser": "^1.0.1",
-    "async": "^2.5.0",
+    "async": "^2.6.1",
     "mailcomposer": "^4.0.2",
-    "nodemailer-build-attachment": "^1.0.4",
-    "postmark": "^1.4.1"
+    "nodemailer-build-attachment": "^1.0.5",
+    "postmark": "^2.2.3"
   },
   "devDependencies": {
-    "chai": "^4.1.1",
+    "chai": "^4.2.0",
     "coveralls": "^3.0.2",
-    "jshint": "^2.9.6",
+    "jshint": "^2.9.7",
     "mocha": "^5.2.0",
-    "nyc": "^13.0.1",
+    "nyc": "^13.1.0",
     "pre-commit": "^1.2.2"
   }
 }

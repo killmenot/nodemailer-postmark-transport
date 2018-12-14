@@ -4,8 +4,8 @@ A Postmark transport for Nodemailer.
 
 [![Build Status](https://travis-ci.org/killmenot/nodemailer-postmark-transport.svg?branch=master)](https://travis-ci.org/killmenot/nodemailer-postmark-transport)
 [![Coverage Status](https://coveralls.io/repos/github/killmenot/nodemailer-postmark-transport/badge.svg?branch=master)](https://coveralls.io/github/killmenot/nodemailer-postmark-transport?branch=master)
-[![Dependency Status](https://david-dm.org/killmenot/nodemailer-postmark-transport.svg)](https://david-dm.org/killmenot/nodemailer-postmark-transport.svg)
-[![npm version](https://badge.fury.io/js/nodemailer-postmark-transport.svg)](https://badge.fury.io/js/nodemailer-postmark-transport)
+[![Dependency Status](https://david-dm.org/killmenot/nodemailer-postmark-transport.svg)](https://david-dm.org/killmenot/nodemailer-postmark-transport)
+[![npm version](https://img.shields.io/npm/v/nodemailer-postmark-transport.svg)](https://www.npmjs.com/package/nodemailer-postmark-transport)
 
 
 ## Requirements
