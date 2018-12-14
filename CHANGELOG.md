@@ -1,7 +1,17 @@
-CHANGELOG
+## CHANGELOG
+
+<a name="2.0.0"></a>
+### 2.0.0 (2018-12-15)
+
+#### Misc
+
+* drop mailcomposer (deprecated)
+* require to install [nodemailer](https://www.npmjs.com/package/nodemailer) package yourself. (Breaking changes)
+* drop support Node.js less than 6 version
+
 
 <a name="1.4.1"></a>
-### 1.4.1 (2018-12-05)
+### 1.4.1 (2018-12-15)
 
 #### Misc
 
