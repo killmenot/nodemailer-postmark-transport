@@ -1,3 +1,12 @@
+CHANGELOG
+
+<a name="1.4.1"></a>
+### 1.4.1 (2018-12-05)
+
+#### Misc
+
+* bump deps
+
 
 <a name="1.4.0"></a>
 ### 1.4.0 (2018-09-08)
@@ -18,7 +27,6 @@
 
 * bump deps
 * drop support Node.js less than 4 version
-
 
 
 <a name="1.2.0"></a>
