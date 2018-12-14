@@ -4,7 +4,7 @@
   "version": "1.4.1",
   "main": "index.js",
   "engines": {
-    "node": ">=4"
+    "node": ">=6"
   },
   "keywords": [
     "nodemailer",
@@ -47,15 +47,18 @@
   "dependencies": {
     "addressparser": "^1.0.1",
     "async": "^2.6.1",
-    "mailcomposer": "^4.0.2",
     "nodemailer-build-attachment": "^1.0.5",
     "postmark": "^2.2.3"
+  },
+  "peerDependencies": {
+    "nodemailer": "4.x"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "coveralls": "^3.0.2",
     "jshint": "^2.9.7",
     "mocha": "^5.2.0",
+    "nodemailer": "^4.7.0",
     "nyc": "^13.1.0",
     "pre-commit": "^1.2.2"
   }
