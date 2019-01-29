@@ -74,6 +74,7 @@ const mail = {
   from: 'john.doe@example.org',
   to: 'jane.doe@example.org',
   templateId: 1234,
+  templateAlias: 'buzz',
   templateModel: {
     foo: 'bar'
   }
@@ -110,7 +111,8 @@ const mail = {
   html: '<h1>Hello, This email contains attachments</h1>',
   attachments: [
     {
-      path: 'data:text/plain;base64,aGVsbG8gd29ybGQ='
+      path: 'data:text/plain;base64,aGVsbG8gd29ybGQ=',
+      cid: 'cid:molo.txt'
     }
   ]
 };
