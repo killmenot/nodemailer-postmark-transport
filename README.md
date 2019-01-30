@@ -166,6 +166,11 @@ const transport = nodemailer.createTransport(postmarkTransport({
 }));
 ```
 
+## Contributors
+
+[List of project's contributors!](CONTRIBUTORS.md)
+
+
 ## License
 
     The MIT License (MIT)
