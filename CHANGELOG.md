@@ -1,5 +1,14 @@
 ## CHANGELOG
 
+<a name="2.1.1"></a>
+
+### 2.1.1 (2019-01-30)
+
+#### Misc
+* pass postmarkOptions to postmark ServerClient
+* update peer dependencies (nodemailer >= 4.x)
+
+
 <a name="2.1.0"></a>
 ### 2.1.0 (2019-01-30)
 
