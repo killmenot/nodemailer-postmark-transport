@@ -10,5 +10,11 @@ node_js:
   - '8'
   - '7'
   - '6'
+env:
+  - NODEMAILER_VERSION=^4.0.0
+  - NODEMAILER_VERSION=^5.0.0
+script:
+  - npm run lint
+  - npm run test:travis
 after_success:
   - npm run coveralls

@@ -7,11 +7,11 @@ A Postmark transport for Nodemailer.
 
 ## Requirements
 
-| version  | Node.js  | peerDependencies |
-|----------|:--------:|:----------------:|
-|    2.x   |    6+    |  nodemailer 4.x  |
-| >=1.3 <2 |    4+    |                  |
-|  <1.3    |   0.10+  |                  |
+| version  | Node.js  | peerDependencies   |
+|----------|:--------:|:------------------:|
+|    2.x   |    6+    |  nodemailer >=4.x  |
+| >=1.3 <2 |    4+    |                    |
+|  <1.3    |   0.10+  |                    |
 
 
 ## Migrating from version 1.x

@@ -28,6 +28,7 @@
   "scripts": {
     "lint": "jshint lib test index.js",
     "test": "mocha",
+    "test:travis": "npm install && npm install nodemailer@$NODEMAILER_VERSION && npm test",
     "coverage": "nyc --reporter=html --reporter=text mocha",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
@@ -48,14 +49,14 @@
     "postmark": "^2.2.3"
   },
   "peerDependencies": {
-    "nodemailer": "4.x"
+    "nodemailer": ">=4.x"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "coveralls": "^3.0.2",
     "jshint": "^2.9.7",
     "mocha": "^5.2.0",
-    "nodemailer": "^4.7.0",
+    "nodemailer": "^5.1.1",
     "nyc": "^13.1.0",
     "pre-commit": "^1.2.2"
   }
