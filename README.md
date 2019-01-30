@@ -58,7 +58,7 @@ transport.sendMail(mail, function (err, info) {
 
 ### Using Postmark templates feature
 
-Read about Postmark templates here: [Special delivery: Postmark templates](https://postmarkapp.com/blog/special-delivery-postmark-templates)
+Read about Postmark templates here: [Special delivery: Postmark templates](https://postmarkapp.com/blog/special-delivery-postmark-templates). Read more about template alias here: [How do I use a template alias?](https://postmarkapp.com/support/article/1117-how-do-i-use-a-template-alias)
 
 ```javascript
 'use strict';
@@ -70,10 +70,22 @@ const transport = nodemailer.createTransport(postmarkTransport({
     apiKey: 'key'
   }
 }));
-const mail = {
+
+// using templateId
+let mail = {
   from: 'john.doe@example.org',
   to: 'jane.doe@example.org',
   templateId: 1234,
+  templateAlias: 'buzz',
+  templateModel: {
+    foo: 'bar'
+  }
+};
+
+// using templateAlias
+let mail = {
+  from: 'john.doe@example.org',
+  to: 'jane.doe@example.org',
   templateAlias: 'buzz',
   templateModel: {
     foo: 'bar'
