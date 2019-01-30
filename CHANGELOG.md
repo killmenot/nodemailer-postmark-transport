@@ -1,5 +1,14 @@
 ## CHANGELOG
 
+<a name="2.1.0"></a>
+### 2.1.0 (2019-01-30)
+
+#### Features
+
+* add attachments ContentId support [#11](https://github.com/killmenot/nodemailer-postmark-transport/issues/11) via ([28614fe](https://github.com/killmenot/nodemailer-postmark-transport/commit/28614fef6ec967a39c0d7559c2fb912bd166dfa4)). Thanks @gabrielstuff
+* add TemplateAlias support [#10](https://github.com/killmenot/nodemailer-postmark-transport/issues/10) via ([12d4d4a](https://github.com/killmenot/nodemailer-postmark-transport/commit/12d4d4a53a4236a665778d03d1892a2368e98ea2)). Thanks @gabrielstuff
+
+
 <a name="2.0.0"></a>
 ### 2.0.0 (2018-12-15)
 

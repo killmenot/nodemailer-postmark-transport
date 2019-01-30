@@ -1,7 +1,7 @@
 {
   "name": "nodemailer-postmark-transport",
   "description": "Postmark transport for Nodemailer",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "main": "index.js",
   "engines": {
     "node": ">=6"
