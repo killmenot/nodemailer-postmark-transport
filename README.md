@@ -158,9 +158,9 @@ const transport = nodemailer.createTransport(transporter);
 
 ```
 
-### Provide Postmark.js client with options
+### Provide Postmark.js client with custom client options
 
-[Postmark.js](https://github.com/wildbit/postmark.js) library allows to specify configuration options for its client. You can get more details about it [here](https://github.com/wildbit/postmark.js/blob/master/lib/postmark/clientDefaults.js#L15)
+[Postmark.js](https://github.com/wildbit/postmark.js) library allows to specify configuration options for its server client. You can get more details about possible values [here](https://github.com/wildbit/postmark.js/blob/master/src/client/models/client/ClientOptions.ts#L2) and default values [here](https://github.com/wildbit/postmark.js/blob/master/src/client/BaseClient.ts#L21)
 
 ```javascript
 'use strict';
@@ -172,7 +172,7 @@ const transport = nodemailer.createTransport(postmarkTransport({
     apiKey: 'key'
   },
   postmarkOptions: {
-    /* ... */
+    timeout: 60
   }
 }));
 ```
