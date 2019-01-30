@@ -298,18 +298,21 @@ describe('PostmarkTransport', () => {
 
     describe('attachments', () => {
       it('should be parsed', (done) => {
-        const names = ['text.txt', 'attachment-2.txt'];
-        const contents = ['TG9yZW0gaXBzdW0uLg==', 'aGVsbG8gd29ybGQ='];
-        const cid = ['cid:text-01.txt', 'cid:text-02.txt'];
+        const names = ['text.txt', 'attachment-2.txt', 'attachment-3.txt'];
+        const contents = ['TG9yZW0gaXBzdW0uLg==', 'aGVsbG8gd29ybGQ=', 'Zm9vIGJheiBiYXI='];
+        const cid = ['', '', 'cid:text-01.txt'];
+
         mail.data.attachments = [
           {
             filename: 'text.txt',
-            content: 'Lorem ipsum..',
-            cid: 'cid:text-01.txt'
+            content: 'Lorem ipsum..'
           },
           {
-            path: 'data:text/plain;base64,aGVsbG8gd29ybGQ=',
-            cid: 'cid:text-02.txt'
+            path: 'data:text/plain;base64,aGVsbG8gd29ybGQ='
+          },
+          {
+            path: 'data:text/plain;base64,Zm9vIGJheiBiYXI=',
+            cid: 'cid:text-01.txt'
           }
         ];
 
@@ -419,16 +422,14 @@ describe('PostmarkTransport', () => {
       });
     });
 
-    describe('template', () => {
+    describe('template id', () => {
       it('should be parsed', (done) => {
         mail.data.templateId = 'foo';
         mail.data.templateModel = { bar: 'baz' };
-        mail.data.templateAlias = 'buzz';
 
         transport._parse(mails, (err, messages) => {
           expect(messages[0].TemplateId).eql('foo');
           expect(messages[0].TemplateModel).eql({ bar: 'baz' });
-          expect(messages[0].TemplateAlias).eql('buzz');
           done();
         });
       });
@@ -440,6 +441,32 @@ describe('PostmarkTransport', () => {
 
         transport._parse(mails, (err, messages) => {
           expect(messages[0].TemplateId).equal('foo');
+          expect(messages[0].TemplateModel).eql({ bar: 'baz' });
+          expect(messages[0].InlineCss).equal(true);
+          done();
+        });
+      });
+    });
+
+    describe('template alias', () => {
+      it('should be parsed', (done) => {
+        mail.data.templateAlias = 'buzz';
+        mail.data.templateModel = { bar: 'baz' };
+
+        transport._parse(mails, (err, messages) => {
+          expect(messages[0].TemplateAlias).eql('buzz');
+          expect(messages[0].TemplateModel).eql({ bar: 'baz' });
+          done();
+        });
+      });
+
+      it('should be parsed (inline css)', (done) => {
+        mail.data.templateAlias = 'buzz';
+        mail.data.templateModel = { bar: 'baz' };
+        mail.data.inlineCss = true;
+
+        transport._parse(mails, (err, messages) => {
+          expect(messages[0].TemplateAlias).equal('buzz');
           expect(messages[0].TemplateModel).eql({ bar: 'baz' });
           expect(messages[0].InlineCss).equal(true);
           done();
