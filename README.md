@@ -76,7 +76,6 @@ let mail = {
   from: 'john.doe@example.org',
   to: 'jane.doe@example.org',
   templateId: 1234,
-  templateAlias: 'buzz',
   templateModel: {
     foo: 'bar'
   }
