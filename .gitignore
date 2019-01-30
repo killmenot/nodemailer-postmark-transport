@@ -26,6 +26,8 @@ build/Release
 
 # Dependency directory
 node_modules
+yarn.lock
+package-lock.json
 
 # Optional npm cache directory
 .npm
