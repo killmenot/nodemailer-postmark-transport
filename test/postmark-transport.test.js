@@ -300,14 +300,16 @@ describe('PostmarkTransport', () => {
       it('should be parsed', (done) => {
         const names = ['text.txt', 'attachment-2.txt'];
         const contents = ['TG9yZW0gaXBzdW0uLg==', 'aGVsbG8gd29ybGQ='];
-
+        const cid = ['cid:text-01.txt', 'cid:text-02.txt'];
         mail.data.attachments = [
           {
             filename: 'text.txt',
-            content: 'Lorem ipsum..'
+            content: 'Lorem ipsum..',
+            cid: 'cid:text-01.txt'
           },
           {
-            path: 'data:text/plain;base64,aGVsbG8gd29ybGQ='
+            path: 'data:text/plain;base64,aGVsbG8gd29ybGQ=',
+            cid: 'cid:text-02.txt'
           }
         ];
 
@@ -316,6 +318,7 @@ describe('PostmarkTransport', () => {
             expect(attachment.Name).equal(names[i]);
             expect(attachment.Content.toString()).equal(contents[i]);
             expect(attachment.ContentType).equal('text/plain');
+            expect(attachment.ContentID).equal(cid[i]);
           });
 
           done();
@@ -420,10 +423,12 @@ describe('PostmarkTransport', () => {
       it('should be parsed', (done) => {
         mail.data.templateId = 'foo';
         mail.data.templateModel = { bar: 'baz' };
+        mail.data.templateAlias = 'buzz';
 
         transport._parse(mails, (err, messages) => {
           expect(messages[0].TemplateId).eql('foo');
           expect(messages[0].TemplateModel).eql({ bar: 'baz' });
+          expect(messages[0].TemplateAlias).eql('buzz');
           done();
         });
       });
