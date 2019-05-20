@@ -476,11 +476,27 @@ describe('PostmarkTransport', () => {
   });
 
   describe('#send', () => {
-    it('should be able to send a single mail', (done) => {
+    it('should be able to send a single mail (callback)', (done) => {
       transport.send(mails[0], (err, info) => {
         expect(info).be.an('object');
 
-        let accepted = info.accepted;
+        const accepted = info.accepted;
+
+        expect(accepted[0].To).equal('jane@example.org');
+        expect(accepted[0].MessageID).be.a('string');
+        expect(accepted[0].SubmittedAt).be.a('string');
+        expect(accepted[0].ErrorCode).equal(0);
+        expect(accepted[0].Message).equal('Test job accepted');
+
+        done();
+      });
+    });
+
+    it('should be able to send a single mail (promise)', (done) => {
+      transport.send(mails[0]).then((info) => {
+        expect(info).be.an('object');
+
+        const accepted = info.accepted;
 
         expect(accepted[0].To).equal('jane@example.org');
         expect(accepted[0].MessageID).be.a('string');
@@ -519,11 +535,33 @@ describe('PostmarkTransport', () => {
   });
 
   describe('#sendBatch', () => {
-    it('should be able to send multiple mails', (done) => {
+    it('should be able to send multiple mail (callback)', (done) => {
       transport.sendBatch(mails, (err, info) => {
         expect(info).be.an('object');
 
-        let accepted = info.accepted;
+        const accepted = info.accepted;
+
+        expect(accepted[0].To).equal('jane@example.org');
+        expect(accepted[0].MessageID).be.a('string');
+        expect(accepted[0].SubmittedAt).be.a('string');
+        expect(accepted[0].ErrorCode).equal(0);
+        expect(accepted[0].Message).equal('Test job accepted');
+
+        expect(accepted[1].To).equal('john@example.org');
+        expect(accepted[1].MessageID).be.a('string');
+        expect(accepted[1].SubmittedAt).be.a('string');
+        expect(accepted[1].ErrorCode).equal(0);
+        expect(accepted[1].Message).equal('Test job accepted');
+
+        done();
+      });
+    });
+
+    it('should be able to send multiple mails (promise)', (done) => {
+      transport.sendBatch(mails).then((info) => {
+        expect(info).be.an('object');
+
+        const accepted = info.accepted;
 
         expect(accepted[0].To).equal('jane@example.org');
         expect(accepted[0].MessageID).be.a('string');

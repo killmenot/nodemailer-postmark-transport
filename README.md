@@ -47,6 +47,7 @@ const mail = {
   html: '<h1>Hello</h1>'
 };
 
+// callback style
 transport.sendMail(mail, function (err, info) {
   if (err) {
     console.error(err);
@@ -54,6 +55,15 @@ transport.sendMail(mail, function (err, info) {
     console.log(info);
   }
 });
+
+// async/await style
+try {
+  const info = await transport.sendMail(mail);
+  console.log(info);
+} catch (err) {
+  console.error(err);
+}
+
 ```
 
 ### Using Postmark templates feature
