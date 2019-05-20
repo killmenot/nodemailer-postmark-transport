@@ -1,5 +1,16 @@
 ## CHANGELOG
 
+<a name="2.2.0"></a>
+
+### 2.2.0 (2019-05-20)
+
+#### Features
+* `send` and `sendBatch` methods return promise if no callback passed
+
+#### Misc
+* bump deps
+
+
 <a name="2.1.1"></a>
 
 ### 2.1.1 (2019-01-30)
