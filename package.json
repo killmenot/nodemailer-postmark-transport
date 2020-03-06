@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "addressparser": "^1.0.1",
-    "async": "^3.0.0",
+    "async": "^3.2.0",
     "nodemailer-build-attachment": "^1.0.5",
     "postmark": "^2.5.0"
   },
@@ -53,11 +53,11 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "coveralls": "^3.0.3",
-    "jshint": "^2.10.2",
-    "mocha": "^6.1.4",
+    "coveralls": "^3.0.9",
+    "jshint": "^2.11.0",
+    "mocha": "^7.1.0",
     "nodemailer": "^6.1.1",
-    "nyc": "^14.1.1",
+    "nyc": "^15.0.0",
     "pre-commit": "^1.2.2"
   }
 }
