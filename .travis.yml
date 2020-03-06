@@ -4,13 +4,12 @@ branches:
   except:
   - gh-pages
 node_js:
+  - '13'
   - '12'
   - '11'
   - '10'
   - '9'
   - '8'
-  - '7'
-  - '6'
 env:
   - NODEMAILER_VERSION=^4.0.0
   - NODEMAILER_VERSION=^5.0.0
