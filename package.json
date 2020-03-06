@@ -26,7 +26,9 @@
     "url": "https://github.com/killmenot/nodemailer-postmark-transport/issues"
   },
   "scripts": {
-    "lint": "eslint lib test index.js --fix",
+    "eslint": "eslint lib test index.js --fix",
+    "remark": "remark .",
+    "lint": "npm run eslint && npm run remark",
     "test": "mocha",
     "test:travis": "npm install && npm install nodemailer@$NODEMAILER_VERSION && npm test",
     "coverage": "nyc --reporter=html --reporter=text mocha",
@@ -38,11 +40,18 @@
       "lib/**/*.js"
     ]
   },
+  "remarkConfig": {
+    "plugins": [
+      "remark-preset-lint-recommended"
+    ]
+  },
   "dependencies": {
     "addressparser": "^1.0.1",
     "async": "^3.2.0",
     "nodemailer-build-attachment": "^1.0.5",
-    "postmark": "^2.5.0"
+    "postmark": "^2.5.0",
+    "remark-cli": "^7.0.1",
+    "remark-preset-lint-recommended": "^3.0.3"
   },
   "peerDependencies": {
     "nodemailer": ">=4.x"
