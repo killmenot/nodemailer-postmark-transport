@@ -1,14 +1,16 @@
 'use strict';
 
 const async = require('async');
-const expect = require('chai').expect;
+const chai = require('chai');
+const dirtyChai = require('dirty-chai');
 const postmarkTransport = require('../');
 const Message = require('../lib/message');
 const pkg = require('../package.json');
+const expect = chai.expect;
 
-function capitalize(s) {
-  return s.charAt(0).toUpperCase() + s.slice(1);
-}
+chai.use(dirtyChai);
+
+const capitalize = s => s.charAt(0).toUpperCase() + s.slice(1);
 
 describe('PostmarkTransport', () => {
   let transport;
@@ -24,7 +26,7 @@ describe('PostmarkTransport', () => {
           subject: 'Hello Jane',
           html: '<h1>Hello Jane</h1>',
           text: 'Hello Jane',
-          headers:[{
+          headers: [{
             key: 'X-Key-Name',
             value: 'key value1'
           }],
@@ -84,6 +86,7 @@ describe('PostmarkTransport', () => {
       const expected = new Message();
 
       transport._parse(mails, (err, messages) => {
+        expect(err).to.not.exist();
         expect(messages[0]).eql(expected);
         done();
       });
@@ -145,11 +148,11 @@ describe('PostmarkTransport', () => {
         ];
 
         const expected = [
-         'foo@example.org',
+          'foo@example.org',
           '"Bar Bar" <bar@example.org>',
           '"Jane Doe" <jane.doe@example.org>',
           '"John, Doe" <john.doe@example.org>',
-          '"Baz" <baz@example.org>',
+          '"Baz" <baz@example.org>'
         ].join(',');
 
         validator(address, expected, ['to', 'cc', 'bcc'], done);
@@ -177,6 +180,7 @@ describe('PostmarkTransport', () => {
         mail.data.subject = 'Subject';
 
         transport._parse(mails, (err, messages) => {
+          expect(err).to.not.exist();
           expect(messages[0].Subject).equal('Subject');
           done();
         });
@@ -188,6 +192,7 @@ describe('PostmarkTransport', () => {
         mail.data.text = 'Hello';
 
         transport._parse(mails, (err, messages) => {
+          expect(err).to.not.exist();
           expect(messages[0].TextBody).equal('Hello');
           done();
         });
@@ -199,6 +204,7 @@ describe('PostmarkTransport', () => {
         mail.data.html = '<h1>Hello</h1>';
 
         transport._parse(mails, (err, messages) => {
+          expect(err).to.not.exist();
           expect(messages[0].HtmlBody).equal('<h1>Hello</h1>');
           done();
         });
@@ -212,6 +218,7 @@ describe('PostmarkTransport', () => {
         };
 
         transport._parse(mails, (err, messages) => {
+          expect(err).to.not.exist();
           expect(messages[0].Headers).eql([
             {
               Name: 'X-Key-Name',
@@ -232,6 +239,7 @@ describe('PostmarkTransport', () => {
         ];
 
         transport._parse(mails, (err, messages) => {
+          expect(err).to.not.exist();
           expect(messages[0].Headers).eql([
             {
               Name: 'X-Key-Name',
@@ -253,6 +261,7 @@ describe('PostmarkTransport', () => {
         };
 
         transport._parse(mails, (err, messages) => {
+          expect(err).to.not.exist();
           expect(messages[0].Headers).eql([
             {
               Name: 'X-Key-Name',
@@ -281,6 +290,7 @@ describe('PostmarkTransport', () => {
         ];
 
         transport._parse(mails, (err, messages) => {
+          expect(err).to.not.exist();
           expect(messages[0].Headers).eql([
             {
               Name: 'X-Key-Name',
@@ -317,6 +327,7 @@ describe('PostmarkTransport', () => {
         ];
 
         transport._parse(mails, (err, messages) => {
+          expect(err).to.not.exist();
           messages[0].Attachments.forEach((attachment, i) => {
             expect(attachment.Name).equal(names[i]);
             expect(attachment.Content.toString()).equal(contents[i]);
@@ -334,6 +345,7 @@ describe('PostmarkTransport', () => {
         mail.data.tag = 'quux';
 
         transport._parse(mails, (err, messages) => {
+          expect(err).to.not.exist();
           expect(messages[0].Tag).equal('quux');
           done();
         });
@@ -345,6 +357,7 @@ describe('PostmarkTransport', () => {
         mail.data.metadata = { foo: 'bar' };
 
         transport._parse(mails, (err, messages) => {
+          expect(err).to.not.exist();
           expect(messages[0].Metadata).eql({ foo: 'bar' });
           done();
         });
@@ -354,6 +367,7 @@ describe('PostmarkTransport', () => {
     describe('trackOpens', () => {
       it('should be ignored', (done) => {
         transport._parse(mails, (err, messages) => {
+          expect(err).to.not.exist();
           expect(messages[0].TrackOpens).be.an('undefined');
           done();
         });
@@ -372,7 +386,7 @@ describe('PostmarkTransport', () => {
         }
 
         async.mapSeries(values, iteratee, (err, results) => {
-          if (err) { return done(err); }
+          expect(err).to.not.exist();
 
           results.forEach((actual, i) => {
             expect(actual.TrackOpens).equal(values[i]);
@@ -385,6 +399,7 @@ describe('PostmarkTransport', () => {
     describe('trackLinks', () => {
       it('should be ignored', (done) => {
         transport._parse(mails, (err, messages) => {
+          expect(err).to.not.exist();
           expect(messages[0].TrackLinks).be.an('undefined');
           done();
         });
@@ -412,7 +427,7 @@ describe('PostmarkTransport', () => {
         }
 
         async.mapSeries(values, iteratee, (err, results) => {
-          if (err) { return done(err); }
+          expect(err).to.not.exist();
 
           results.forEach((actual, i) => {
             expect(actual.TrackLinks).equal(values[i]);
@@ -428,6 +443,7 @@ describe('PostmarkTransport', () => {
         mail.data.templateModel = { bar: 'baz' };
 
         transport._parse(mails, (err, messages) => {
+          expect(err).to.not.exist();
           expect(messages[0].TemplateId).eql('foo');
           expect(messages[0].TemplateModel).eql({ bar: 'baz' });
           done();
@@ -440,6 +456,7 @@ describe('PostmarkTransport', () => {
         mail.data.inlineCss = true;
 
         transport._parse(mails, (err, messages) => {
+          expect(err).to.not.exist();
           expect(messages[0].TemplateId).equal('foo');
           expect(messages[0].TemplateModel).eql({ bar: 'baz' });
           expect(messages[0].InlineCss).equal(true);
@@ -454,6 +471,7 @@ describe('PostmarkTransport', () => {
         mail.data.templateModel = { bar: 'baz' };
 
         transport._parse(mails, (err, messages) => {
+          expect(err).to.not.exist();
           expect(messages[0].TemplateAlias).eql('buzz');
           expect(messages[0].TemplateModel).eql({ bar: 'baz' });
           done();
@@ -466,6 +484,7 @@ describe('PostmarkTransport', () => {
         mail.data.inlineCss = true;
 
         transport._parse(mails, (err, messages) => {
+          expect(err).to.not.exist();
           expect(messages[0].TemplateAlias).equal('buzz');
           expect(messages[0].TemplateModel).eql({ bar: 'baz' });
           expect(messages[0].InlineCss).equal(true);
@@ -478,6 +497,7 @@ describe('PostmarkTransport', () => {
   describe('#send', () => {
     it('should be able to send a single mail (callback)', (done) => {
       transport.send(mails[0], (err, info) => {
+        expect(err).to.not.exist();
         expect(info).be.an('object');
 
         const accepted = info.accepted;
@@ -519,9 +539,10 @@ describe('PostmarkTransport', () => {
       };
 
       transport.send(mails[0], function (err, info) {
+        expect(err).to.not.exist();
         expect(info).be.an('object');
 
-        let accepted = info.accepted;
+        const accepted = info.accepted;
 
         expect(accepted[0].To).equal('jane@example.org');
         expect(accepted[0].MessageID).be.a('string');
@@ -537,6 +558,7 @@ describe('PostmarkTransport', () => {
   describe('#sendBatch', () => {
     it('should be able to send multiple mail (callback)', (done) => {
       transport.sendBatch(mails, (err, info) => {
+        expect(err).to.not.exist();
         expect(info).be.an('object');
 
         const accepted = info.accepted;

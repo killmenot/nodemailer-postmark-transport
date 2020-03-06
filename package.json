@@ -26,7 +26,7 @@
     "url": "https://github.com/killmenot/nodemailer-postmark-transport/issues"
   },
   "scripts": {
-    "lint": "jshint lib test index.js",
+    "lint": "eslint lib test index.js --fix",
     "test": "mocha",
     "test:travis": "npm install && npm install nodemailer@$NODEMAILER_VERSION && npm test",
     "coverage": "nyc --reporter=html --reporter=text mocha",
@@ -54,7 +54,12 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "coveralls": "^3.0.9",
-    "jshint": "^2.11.0",
+    "dirty-chai": "^2.0.1",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "mocha": "^7.1.0",
     "nodemailer": "^6.1.1",
     "nyc": "^15.0.0",
