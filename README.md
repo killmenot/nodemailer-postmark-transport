@@ -2,13 +2,14 @@
 
 A Postmark transport for Nodemailer.
 
-[![Build Status](https://travis-ci.org/killmenot/nodemailer-postmark-transport.svg?branch=master)](https://travis-ci.org/killmenot/nodemailer-postmark-transport) [![Coverage Status](https://coveralls.io/repos/github/killmenot/nodemailer-postmark-transport/badge.svg?branch=master)](https://coveralls.io/github/killmenot/nodemailer-postmark-transport?branch=master) [![Dependency Status](https://david-dm.org/killmenot/nodemailer-postmark-transport.svg)](https://david-dm.org/killmenot/nodemailer-postmark-transport) [![devDependencies Status](https://david-dm.org/killmenot/nodemailer-postmark-transport/dev-status.svg)](https://david-dm.org/killmenot/nodemailer-postmark-transport?type=dev) [![peerDependencies Status](https://david-dm.org/killmenot/nodemailer-postmark-transport/peer-status.svg)](https://david-dm.org/killmenot/nodemailer-postmark-transport?type=peer) [![npm version](https://img.shields.io/npm/v/nodemailer-postmark-transport.svg)](https://www.npmjs.com/package/nodemailer-postmark-transport) [![Known Vulnerabilities](https://snyk.io/test/npm/nodemailer-postmark-transport/2.0.0/badge.svg)](https://snyk.io/test/npm/nodemailer-postmark-transport/2.0.0)
+[![Build Status](https://travis-ci.org/killmenot/nodemailer-postmark-transport.svg?branch=master)](https://travis-ci.org/killmenot/nodemailer-postmark-transport) [![Coverage Status](https://coveralls.io/repos/github/killmenot/nodemailer-postmark-transport/badge.svg?branch=master)](https://coveralls.io/github/killmenot/nodemailer-postmark-transport?branch=master) [![Dependency Status](https://david-dm.org/killmenot/nodemailer-postmark-transport.svg)](https://david-dm.org/killmenot/nodemailer-postmark-transport) [![devDependencies Status](https://david-dm.org/killmenot/nodemailer-postmark-transport/dev-status.svg)](https://david-dm.org/killmenot/nodemailer-postmark-transport?type=dev) [![peerDependencies Status](https://david-dm.org/killmenot/nodemailer-postmark-transport/peer-status.svg)](https://david-dm.org/killmenot/nodemailer-postmark-transport?type=peer) [![npm version](https://img.shields.io/npm/v/nodemailer-postmark-transport.svg)](https://www.npmjs.com/package/nodemailer-postmark-transport) [![Known Vulnerabilities](https://snyk.io/test/npm/nodemailer-postmark-transport/badge.svg)](https://snyk.io/test/npm/nodemailer-postmark-transport)
 
 
 ## Requirements
 
 | version  | Node.js  | peerDependencies   |
 |----------|:--------:|:------------------:|
+|    3.x   |    8+    |  nodemailer >=4.x  |
 |    2.x   |    6+    |  nodemailer >=4.x  |
 | >=1.3 <2 |    4+    |                    |
 |  <1.3    |   0.10+  |                    |
