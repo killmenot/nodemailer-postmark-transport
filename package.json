@@ -3,6 +3,10 @@
   "description": "Postmark transport for Nodemailer",
   "version": "3.0.0",
   "main": "index.js",
+  "files": [
+    "lib/**.*",
+    "index.js"
+  ],
   "engines": {
     "node": ">=8"
   },
