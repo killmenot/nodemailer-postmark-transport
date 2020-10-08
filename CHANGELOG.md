@@ -1,5 +1,14 @@
 ## CHANGELOG
 
+<a name="4.0.0"></a>
+
+### 4.0.0 (2020-10-03)
+
+#### Misc
+*   drop support Node.js less than 10 version
+*   bump deps
+
+
 <a name="3.0.0"></a>
 
 ### 3.0.0 (2020-03-06)
