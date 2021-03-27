@@ -53,7 +53,7 @@
   "dependencies": {
     "addressparser": "^1.0.1",
     "async": "^3.2.0",
-    "nodemailer-build-attachment": "^1.0.5",
+    "nodemailer-build-attachment": "^2.0.0",
     "postmark": "^2.7.3"
   },
   "peerDependencies": {
