@@ -30,6 +30,7 @@
     "url": "https://github.com/killmenot/nodemailer-postmark-transport/issues"
   },
   "scripts": {
+    "bump:deps": "ncu --target minor -u",
     "eslint": "eslint lib test index.js --fix",
     "remark": "remark .",
     "lint": "npm run eslint && npm run remark",
@@ -73,6 +74,7 @@
     "husky": "^4.3.0",
     "mocha": "^8.1.3",
     "nodemailer": "^6.1.1",
+    "npm-check-updates": "^11.3.0",
     "nyc": "^15.1.0",
     "remark-cli": "^8.0.1",
     "remark-preset-lint-recommended": "^4.0.1"
