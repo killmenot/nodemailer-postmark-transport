@@ -1,5 +1,13 @@
 ## CHANGELOG
 
+<a name="5.1.0"></a>
+
+### 5.1.0 (2021-06-04)
+
+#### Features
+*   add MessageStream support
+
+
 <a name="5.0.0"></a>
 
 ### 5.0.0 (2021-05-18)
