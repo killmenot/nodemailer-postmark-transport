@@ -364,6 +364,18 @@ describe('PostmarkTransport', () => {
       });
     });
 
+    describe('messageStream', () => {
+      it('should be parsed', (done) => {
+        mail.data.messageStream = 'outbound';
+
+        transport._parse(mails, (err, messages) => {
+          expect(err).to.not.exist();
+          expect(messages[0].MessageStream).equal('outbound');
+          done();
+        });
+      });
+    });
+
     describe('trackOpens', () => {
       it('should be ignored', (done) => {
         transport._parse(mails, (err, messages) => {
