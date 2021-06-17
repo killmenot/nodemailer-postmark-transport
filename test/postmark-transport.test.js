@@ -138,6 +138,7 @@ describe('PostmarkTransport', () => {
 
       it('should parse mixed address formats in to / cc / bcc fields', (done) => {
         const address = [
+          null, // If per chance happens to be a null address, it should get pruned
           'foo@example.org',
           '"Bar Bar" bar@example.org',
           '"Jane Doe" <jane.doe@example.org>, "John, Doe" <john.doe@example.org>',
