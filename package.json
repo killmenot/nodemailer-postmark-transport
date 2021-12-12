@@ -2,7 +2,8 @@
   "name": "nodemailer-postmark-transport",
   "description": "Postmark transport for Nodemailer",
   "version": "5.1.0",
-  "main": "index.js",
+  "main": "./index.js",
+  "types": "./index.d.ts",
   "files": [
     "lib/**.*",
     "index.js"
