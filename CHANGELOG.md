@@ -1,5 +1,13 @@
 ## CHANGELOG
 
+<a name="5.2.1"></a>
+
+### 5.2.1 (2022-01-06)
+
+#### Misc
+*   fix: add index.d.ts to files
+
+
 <a name="5.2.0"></a>
 
 ### 5.2.0 (2022-01-06)
