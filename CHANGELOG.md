@@ -1,5 +1,15 @@
 ## CHANGELOG
 
+<a name="6.0.0"></a>
+
+### 6.0.0 (2023-12-19)
+
+#### Misc
+*   drop support Node.js less than 18 version
+*   drop support nodemailer less than 6 version
+*   bump deps
+
+
 <a name="5.3.0"></a>
 
 ### 5.3.0 (2023-12-19)
