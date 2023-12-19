@@ -37,7 +37,6 @@
     "remark": "remark .",
     "lint": "npm run eslint && npm run remark",
     "test": "mocha",
-    "test:travis": "npm install && npm install nodemailer@$NODEMAILER_VERSION && npm test",
     "test-coverage": "nyc --reporter=html --reporter=text mocha",
     "test-coveralls": "nyc report --reporter=text-lcov > ./coverage/lcov.info",
     "prepare": "husky install"
