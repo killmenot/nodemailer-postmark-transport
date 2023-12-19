@@ -1,4 +1,4 @@
-import { Models, Client } from 'postmark'
+import { Models, Client } from 'postmark';
 
 declare module 'nodemailer-postmark-transport' {
   type Callback<T> = (error: (Error | null), result: (T | null)) => void;
@@ -7,6 +7,7 @@ declare module 'nodemailer-postmark-transport' {
     messageId?: string;
     accepted: Array<Models.MessageSendingResponse>;
     rejected: Array<Models.MessageSendingResponse>;
+    originalResults: Array<Models.MessageSendingResponse>;
   }
 
   export interface PostmarkTransportOptions {
