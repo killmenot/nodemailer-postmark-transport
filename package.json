@@ -59,7 +59,7 @@
     "postmark": "^4.0.2"
   },
   "peerDependencies": {
-    "nodemailer": ">=4.x"
+    "nodemailer": ">=6.x"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
