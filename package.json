@@ -10,7 +10,7 @@
     "index.d.ts"
   ],
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "keywords": [
     "nodemailer",
