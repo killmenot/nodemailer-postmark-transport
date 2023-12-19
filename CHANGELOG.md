@@ -1,5 +1,13 @@
 ## CHANGELOG
 
+<a name="5.3.0"></a>
+
+### 5.3.0 (2023-12-19)
+
+#### Features
+*   feat: add originalResults field to the SendMessageInfo
+
+
 <a name="5.2.1"></a>
 
 ### 5.2.1 (2022-01-06)
