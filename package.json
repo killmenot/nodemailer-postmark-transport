@@ -56,7 +56,7 @@
     "addressparser": "^1.0.1",
     "async": "^3.2.5",
     "nodemailer-build-attachment": "^3.0.0",
-    "postmark": "^2.9.5"
+    "postmark": "^4.0.2"
   },
   "peerDependencies": {
     "nodemailer": ">=4.x"
