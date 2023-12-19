@@ -74,7 +74,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-standard": "^4.1.0",
-    "husky": "^6.0.0",
+    "husky": "^8.0.3",
     "mocha": "^8.4.0",
     "nodemailer": "^6.9.7",
     "npm-check-updates": "^16.14.12",
