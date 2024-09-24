@@ -4,9 +4,6 @@ A Postmark transport for Nodemailer.
 
 [![Build Status](https://github.com/killmenot/nodemailer-postmark-transport/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/killmenot/nodemailer-postmark-transport/actions?query=branch%3Amaster) [![Coverage Status](https://coveralls.io/repos/github/killmenot/nodemailer-postmark-transport/badge.svg?branch=master)](https://coveralls.io/github/killmenot/nodemailer-postmark-transport?branch=master) [![Dependency Status](https://img.shields.io/librariesio/release/npm/nodemailer-postmark-transport)](https://libraries.io/npm/nodemailer-postmark-transport) [![npm version](https://img.shields.io/npm/v/nodemailer-postmark-transport.svg)](https://www.npmjs.com/package/nodemailer-postmark-transport) [![Known Vulnerabilities](https://snyk.io/test/npm/nodemailer-postmark-transport/badge.svg)](https://snyk.io/test/npm/nodemailer-postmark-transport) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/dc2a64fc8683487da82430d6ca3c7234)](https://www.codacy.com/gh/killmenot/nodemailer-postmark-transport/dashboard/nodemailer-postmark-transport)
 
-
-
-
 ## Requirements
 
 | version  | Node.js  | peerDependencies   |
@@ -19,11 +16,9 @@ A Postmark transport for Nodemailer.
 | >=1.3 <2 |    4+    |                    |
 |  <1.3    |   0.10+  |                    |
 
-
 ## Migrating from version 1.x
 
 Please see [CHANGELOG](/CHANGELOG.md#200-2018-12-05) for more details.
-
 
 ## Install
 
@@ -197,28 +192,28 @@ const transport = nodemailer.createTransport(postmarkTransport({
 
 [List of project's contributors!](CONTRIBUTORS.md)
 
-
 ## License
 
-    The MIT License (MIT)
+```
+The MIT License (MIT)
 
-    Copyright (c) Alexey Kucherenko
+Copyright (c) Alexey Kucherenko
 
-    Permission is hereby granted, free of charge, to any person obtaining a copy
-    of this software and associated documentation files (the "Software"), to deal
-    in the Software without restriction, including without limitation the rights
-    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-    copies of the Software, and to permit persons to whom the Software is
-    furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-    SOFTWARE.
-
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
