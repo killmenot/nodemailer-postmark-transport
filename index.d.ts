@@ -16,6 +16,7 @@ declare module 'nodemailer-postmark-transport' {
   }
 
   export class PostmarkTransport {
+    constructor(options?: PostmarkTransportOptions);
     name: string;
     version: string;
     canSendBatch: boolean;
