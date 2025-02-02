@@ -1,7 +1,7 @@
 {
   "name": "nodemailer-postmark-transport",
   "description": "Postmark transport for Nodemailer",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "main": "./index.js",
   "types": "./index.d.ts",
   "files": [

@@ -1,5 +1,14 @@
 ## CHANGELOG
 
+<a name="6.0.1"></a>
+
+### 6.0.1 (2025-02-02)
+
+#### Misc
+
+* fix: add class constructor to type definitions
+
+
 <a name="6.0.0"></a>
 
 ### 6.0.0 (2023-12-19)
