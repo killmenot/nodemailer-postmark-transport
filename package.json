@@ -10,7 +10,7 @@
     "index.d.ts"
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "keywords": [
     "nodemailer",
@@ -56,29 +56,29 @@
     "addressparser": "^1.0.1",
     "async": "^3.2.6",
     "nodemailer-build-attachment": "^3.0.0",
-    "postmark": "^4.0.5"
+    "postmark": "^4.0.7"
   },
   "peerDependencies": {
-    "nodemailer": ">=6.x"
+    "nodemailer": "^7.0.0 || ^8.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.5.0",
-    "@commitlint/config-conventional": "^19.5.0",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "chai": "^4.5.0",
     "coveralls": "^3.1.1",
     "dirty-chai": "^2.0.1",
     "eslint": "^8.57.1",
     "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.30.0",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.6.0",
     "eslint-plugin-standard": "^4.1.0",
     "husky": "^8.0.3",
     "mocha": "^8.4.0",
-    "nodemailer": "^6.9.15",
-    "npm-check-updates": "^17.1.3",
+    "nodemailer": "^8.0.7",
+    "npm-check-updates": "^17.1.18",
     "nyc": "^17.1.0",
     "remark-cli": "^12.0.1",
-    "remark-preset-lint-recommended": "^7.0.0"
+    "remark-preset-lint-recommended": "^7.0.1"
   }
 }
