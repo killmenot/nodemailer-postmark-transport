@@ -1,5 +1,16 @@
 ## CHANGELOG
 
+<a name="7.0.0"></a>
+
+### 7.0.0 (2025-05-23)
+
+#### Misc
+
+* drop support Node.js less than 20 version
+* drop support nodemailer less than 7 version
+* bump some deps
+
+
 <a name="6.0.1"></a>
 
 ### 6.0.1 (2025-02-02)
