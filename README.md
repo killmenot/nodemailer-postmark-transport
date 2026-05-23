@@ -8,6 +8,7 @@ A Postmark transport for Nodemailer.
 
 | version  | Node.js  | peerDependencies   |
 |----------|:--------:|:------------------:|
+|    7.x   |    20+   |  nodemailer >=7.x  |
 |    6.x   |    18+   |  nodemailer >=6.x  |
 |    5.x   |    12+   |  nodemailer >=4.x  |
 |    4.x   |    10+   |  nodemailer >=4.x  |
